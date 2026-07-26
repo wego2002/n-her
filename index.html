@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f7f2" />
+    <title>Näher – gemeinsam unterwegs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Näher Startseite"><span class="brand-mark">n</span><span>Näher</span></a>
+        <div class="place-pill"><span class="pulse"></span><span id="place-label">Berlin</span></div>
+        <button class="avatar-button" id="profile-button" aria-label="Profil öffnen">O</button>
+      </header>
+
+      <section class="map-section" aria-label="Karte mit geteilten Standorten">
+        <div id="map" aria-label="Interaktive Karte"></div>
+        <button id="locate-button" class="locate-button" aria-label="Zu meinem Standort springen" title="Mein Standort">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l3.1 6.9L22 12l-6.9 3.1L12 22l-3.1-6.9L2 12l6.9-2.1L12 3zm0 4.4L10.3 11 6.7 12l3.6 1 1.7 3.6 1.7-3.6 3.6-1-3.6-1L12 7.4z" /></svg>
+        </button>
+        <div class="map-hint" id="map-hint"><span class="hint-icon">⌖</span><div><strong>Dein privater Standort</strong><p>Tippe auf das Fadenkreuz, um ihn auf der Karte zu sehen.</p></div></div>
+      </section>
+
+      <section class="people-panel">
+        <div class="section-heading"><div><p class="eyebrow">Dein Kreis</p><h1 id="people-title">Noch niemand dabei</h1></div><button id="invite-button" class="invite-button"><span>+</span> Einladen</button></div>
+        <div class="sharing-status"><span class="status-check">✓</span><span id="sharing-text">Dein Standort ist privat, bis du ihn bewusst teilst.</span><button id="sharing-toggle">Teilen aktivieren</button></div>
+        <p class="empty-state" id="empty-state">Lade Menschen ein. Erst wenn sie zustimmen und ihren Standort freigeben, werden sie auf deiner Karte angezeigt.</p>
+        <div class="invite-list" id="invite-list" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <dialog id="invite-dialog" class="modal">
+      <form method="dialog" class="modal-content" id="invite-form">
+      <button class="modal-close" type="button" aria-label="Schließen">×</button>
+        <p class="eyebrow">Zusammen unterwegs</p><h2>Teile deinen Einladungslink</h2><p class="modal-text">Eingeladene entscheiden selbst, ob und wie lange sie ihren Standort teilen.</p>
+        <label for="invite-link">Link</label><div class="link-copy"><input id="invite-link" readonly /><button id="copy-invite" type="button">Kopieren</button></div>
+        <p class="privacy-note">Standorte werden nur mit gegenseitiger Zustimmung sichtbar.</p>
+      </form>
+    </dialog>
+   <dialog id="join-dialog" class="modal">
+  <form method="dialog" class="modal-content" id="join-form">
+
+    <button class="modal-close" type="button" aria-label="Schließen">×</button>
+
+    <p class="eyebrow">Einladung erhalten</p>
+    <h2>Dem Kreis beitreten</h2>
+    <p class="modal-text">
+      Dein Standort wird erst geteilt, wenn du dies danach aktiv einschaltest.
+    </p>
+
+    <label for="join-name">Dein Name</label>
+    <input id="join-name" required maxlength="40" placeholder="z. B. Ole" />
+
+    <button class="send-invite" type="submit">
+      Beitreten <span>→</span>
+    </button>
+
+  </form>
+</dialog>
+    <div class="toast" id="toast" role="status"></div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/src/main.js"></script>
+  </body>
+</html>
