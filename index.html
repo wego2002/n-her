@@ -43,6 +43,31 @@
         <p class="privacy-note">Standorte werden nur mit gegenseitiger Zustimmung sichtbar.</p>
       </form>
     </dialog>
+<dialog id="create-dialog" class="modal">
+  <form method="dialog" class="modal-content" id="create-form">
+
+    <button class="modal-close" type="button" aria-label="Schließen">×</button>
+
+    <p class="eyebrow">Willkommen</p>
+    <h2>Erstelle einen Kreis</h2>
+    <p class="modal-text">
+      Wie möchtest du heißen?
+    </p>
+
+    <label for="create-name">Dein Name</label>
+    <input
+      id="create-name"
+      required
+      maxlength="40"
+      placeholder="z. B. Max"
+    />
+
+    <button class="send-invite" type="submit">
+      Weiter <span>→</span>
+    </button>
+
+  </form>
+</dialog>
    <dialog id="join-dialog" class="modal">
   <form method="dialog" class="modal-content" id="join-form">
 

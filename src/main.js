@@ -74,8 +74,28 @@ socket.on('disconnect', () => notify('Verbindung zum Live-Server verloren.'));
 
 const roomFromUrl = new URLSearchParams(location.search).get('room');
 socket.on('connect', () => {
-  if (roomFromUrl) { document.querySelector('#join-dialog').showModal(); return; }
-  socket.emit('session:create', 'Du', useSession);
+  if (roomFromUrl) {
+    document.querySelector('#join-dialog').showModal();
+    return;
+  }
+
+  document.querySelector('#create-dialog').showModal();
+});
+document.querySelector('#create-form').addEventListener('submit', event => {
+  event.preventDefault();
+
+const name = document.querySelector('#create-name').value.trim();
+
+if (!name) {
+    notify("Bitte gib einen Namen ein.");
+    return;
+}
+
+  socket.emit('session:create', name, data => {
+    document.querySelector('#create-dialog').close();
+    useSession(data);
+    notify('Kreis erstellt.');
+  });
 });
 
 document.querySelector('#join-form').addEventListener('submit', event => { event.preventDefault(); const name = document.querySelector('#join-name').value.trim(); socket.emit('session:join', { sessionId: roomFromUrl, name }, data => { if (!data.ok) return notify(data.error); document.querySelector('#join-dialog').close(); useSession(data); notify('Du bist dem Kreis beigetreten.'); }); });
